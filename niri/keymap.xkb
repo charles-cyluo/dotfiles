@@ -4,8 +4,6 @@ xkb_keymap {
     xkb_compat    { include "complete" };
     xkb_symbols   {
         include "pc+us+inet(evdev)"
-        replace key <ESC> { [ Caps_Lock ] };
-        replace key <CAPS> { [ Escape ] };
     };
     xkb_geometry  { include "pc(pc104)" };
 };
