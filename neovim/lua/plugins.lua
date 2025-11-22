@@ -13,34 +13,38 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  {
-    "neoclide/coc.nvim",
-    branch = "release",
-    dependencies = {
-      "rafamadriz/friendly-snippets"
-    }
-  },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-treesitter/playground",
-  },
-  "L3MON4D3/LuaSnip",
+  { "phaazon/hop.nvim", branch = "v2" },
+  "Vonr/align.nvim",
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim"
     }
   },
+  "kyazdani42/nvim-web-devicons",
+}
+local neovim_plugins = {
+  {
+    "neoclide/coc.nvim",
+    branch = "release",
+    dependencies = {
+      "rafamadriz/friendly-snippets"
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/playground",
+    "L3MON4D3/LuaSnip",
+  },
+
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}
+    "mfussenegger/nvim-dap-python",
+    -- dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio"
+    -- },
   },
-  "mfussenegger/nvim-dap-python",
-
-  "numToStr/Comment.nvim",
-  { "phaazon/hop.nvim", branch = "v2" },
-  "Vonr/align.nvim",
-
   "lervag/vimtex",
   {
     "chomosuke/typst-preview.nvim",
@@ -49,19 +53,18 @@ local plugins = {
     build = function() require "typst-preview".update() end,
   },
 
-  "lambdalisue/suda.vim",
-
   -- "shaunsingh/nord.nvim",
   { "catppuccin/nvim", name = "catppuccin" },
-  "kyazdani42/nvim-web-devicons",
-  "nvim-lualine/lualine.nvim",
-  "akinsho/bufferline.nvim",
-
-  "kyazdani42/nvim-tree.lua",
-  "akinsho/toggleterm.nvim",
-  "jlanzarotta/bufexplorer",
-  "rcarriga/nvim-notify",
-
+  {
+    "numToStr/Comment.nvim",
+    "nvim-lualine/lualine.nvim",
+    "lambdalisue/suda.vim",
+    "akinsho/bufferline.nvim",
+    "jlanzarotta/bufexplorer",
+    "rcarriga/nvim-notify",
+    "kyazdani42/nvim-tree.lua",
+    "akinsho/toggleterm.nvim",
+  },
   {
     "m4xshen/hardtime.nvim",
     lazy = false,
@@ -77,12 +80,24 @@ local plugins = {
   },
 }
 
-require("lazy").setup(plugins)
+local plugin_files = {
+  "hop", "align",
+}
+local neovim_plugin_files = {
+  "coc-nvim", "dap",
+  "treesitter", "vimtex",
+  "nvim-tree", "lualine", "bufferline", "notify",
+  "toggleterm", "Comment",
+}
 
-local plugin_files = { "lualine", "nvim-tree",
-  "bufferline", "Comment", "hop", "toggleterm",
-  "treesitter", "vimtex", "align",
-  "coc-nvim", "dap", "notify" }
+if not vim.g.vscode then
+  vim.list_extend(plugins, neovim_plugins)
+  vim.list_extend(plugin_files, neovim_plugin_files)
+end
+
+require("lazy").setup(plugins)
+-- Add lualine only when not in VSCode
+
 for i = 1, #plugin_files do
   local plugin = plugin_files[i]
   -- print("Load plugin config file: "..plugin)
