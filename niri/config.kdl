@@ -75,8 +75,8 @@ layout {
 
 spawn-at-startup "waybar"
 
-spawn-at-startup "swww-daemon"
-spawn-at-startup "swww" "img" "~/.local/share/wallpapers/wallpaper.png"
+spawn-at-startup "awww-daemon"
+spawn-at-startup "awww" "img" "~/.local/share/wallpapers/wallpaper.png"
 
 spawn-at-startup "dunst"
 spawn-at-startup "fcitx5"
@@ -289,7 +289,7 @@ binds {
 
   // Expand the focused column to space not taken up by other fully visible columns.
   // Makes the column "fill the rest of the space".
-  Mod+Ctrl+F { expand-column-to-available-width; }
+  Mod+Ctrl+F hotkey-overlay-title="Expand column to available width" { expand-column-to-available-width; }
 
   Mod+C { center-column; }
 
