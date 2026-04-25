@@ -11,7 +11,7 @@ Applications:
 Desktop:
 1. [Hyprland](https://github.com/hyprwm/Hyprland)
 2. [Niri](https://github.com/YaLTeR/niri)
-3. [Noctalia shell](https://github.com/noctalia-dev/noctalia-shell)
+3. [Noctalia Shell](https://github.com/noctalia-dev/noctalia-shell)
 4. [Swappy](https://github.com/jtheoof/swappy)
 
 Miscellaneous:

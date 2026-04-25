@@ -33,7 +33,6 @@ local neovim_plugins = {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    "nvim-treesitter/playground",
     "L3MON4D3/LuaSnip",
   },
 
