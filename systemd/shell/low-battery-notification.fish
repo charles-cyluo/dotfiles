@@ -9,6 +9,6 @@ if echo $bat_info | grep -q "Discharging"
   set percentage (string split " " $before_percent)[-1]
   if test $percentage -lt 20
     printf "condition is true" | systemd-cat -t low-battery-notification #write to log if condition is true
-    /usr/bin/notify-send -u critical "Battery Low" "$bat_info"
+    qs -c noctalia-shell ipc call toast send "{\"title\": \"$bat_info\", \"type\": \"warning\"}"
   end
 end

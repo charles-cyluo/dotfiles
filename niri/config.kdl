@@ -73,12 +73,12 @@ layout {
   }
 }
 
-spawn-at-startup "waybar"
+environment {
+  QT_QPA_PLATFORMTHEME "qt6ct"
+}
 
-spawn-at-startup "awww-daemon"
-spawn-at-startup "awww" "img" "~/.local/share/wallpapers/wallpaper.png"
+spawn-at-startup "qs" "-c" "noctalia-shell"
 
-spawn-at-startup "dunst"
 spawn-at-startup "fcitx5"
 
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
@@ -112,29 +112,49 @@ window-rule {
   // draw-border-with-background false
 }
 
+window-rule {
+    match app-id=r#"^Zotero$"#
+    match title=r#"^Progress$"#
+    open-floating true
+    default-floating-position x=0 y=0 relative-to="top-right"
+}
+
 // Enable rounded corners for all windows.
 window-rule {
   geometry-corner-radius 12
   clip-to-geometry true
 }
 
+// For noctalia shell
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
+}
+
+// Set the overview wallpaper on the backdrop.
+layer-rule {
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
+}
+
 binds {
   Mod+Shift+Slash { show-hotkey-overlay; }
 
   Mod+Return hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-  Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-theme" "~/.config/rofi/launcher.rasi" "-show" "drun"; }
-  Mod+W hotkey-overlay-title="Show windows: rofi" { spawn "rofi" "-theme" "~/.config/rofi/launcher.rasi" "-show" "window"; }
-  Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-
   Mod+P hotkey-overlay-title="Run Firefox" { spawn "firefox"; }
 
-  XF86AudioRaiseVolume allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "+10%"; }
-  XF86AudioLowerVolume allow-when-locked=true { spawn "pactl" "set-sink-volume" "@DEFAULT_SINK@" "-10%"; }
-  XF86AudioMute    allow-when-locked=true { spawn "pactl" "set-sink-mute" "@DEFAULT_SINK@" "toggle"; }
-  XF86AudioMicMute   allow-when-locked=true { spawn "pactl" "set-source-mute" "@DEFAULT_SOURCE@" "toggle"; }
+  Mod+D hotkey-overlay-title="Launcher: noctalia" { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
+  Mod+S hotkey-overlay-title="Control Center: noctalia" { spawn-sh "qs -c noctalia-shell ipc call controlCenter toggle"; }
+  Mod+Shift+S hotkey-overlay-title="Settings: noctalia" { spawn-sh "qs -c noctalia-shell ipc call settings toggle"; }
+  Mod+W hotkey-overlay-title="List of Windows: noctalia" { spawn-sh "qs -c noctalia-shell ipc call launcher windows"; }
+  Super+Alt+L hotkey-overlay-title="Lock Screen: noctalia" { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
+  Mod+A hotkey-overlay-title="AI Assistant: noctalia plugin" { spawn-sh "qs -c noctalia-shell ipc call plugin:assistant-panel toggle"; }
 
-  XF86MonBrightnessUp allow-when-locked=true { spawn "light" "-A" "5"; }
-  XF86MonBrightnessDown allow-when-locked=true { spawn "light" "-U" "5"; }
+  XF86AudioRaiseVolume { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "increase"; }
+  XF86AudioLowerVolume { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "decrease"; }
+  XF86AudioMute { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "muteOutput"; }
+  XF86MonBrightnessUp { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "brightness" "increase"; }
+  XF86MonBrightnessDown { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "brightness" "decrease"; }
 
   Mod+Ctrl+S hotkey-overlay-title="Screenshot: grim and swappy" { spawn-sh "grim -g \"$(slurp)\" - | swappy -f -"; }
 
