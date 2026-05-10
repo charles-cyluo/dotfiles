@@ -1,0 +1,14 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+
+[[plugin.deps]]
+use = "dedukun/relative-motions"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-macchiato"

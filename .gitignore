@@ -1,2 +1,3 @@
 neovim/plugin/packer_compiled.lua
 neovim/lazy-lock.json
+yazi/package.toml
