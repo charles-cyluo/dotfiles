@@ -13,7 +13,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  { "phaazon/hop.nvim", branch = "v2" },
+  { "folke/flash.nvim" },
   "Vonr/align.nvim",
   {
     "nvim-telescope/telescope.nvim",
@@ -80,7 +80,8 @@ local neovim_plugins = {
 }
 
 local plugin_files = {
-  "hop", "align",
+  "flash",
+  "align",
 }
 local neovim_plugin_files = {
   "coc-nvim", "dap",
